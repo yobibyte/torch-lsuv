@@ -24,22 +24,24 @@ local function lsuv_init(model, batch, tol_var, t_max)
     local tol_var = tol_var or 0.1
     local t_max   = t_max or 10
 
-    --params, gradParams = model:getParameters()
-    --local w = orthogonal_init(params:size())
-
-		for i=1,#model.modules do
+  	for i=1,#model.modules do
 		    local m = model.modules[i]
-        local out = m.forward(batch)
-        local var = torch.var(out, 1)
+        if m.weight == nil then
+          break
+        end
+        local w = orthogonal_init(m.weight:size())
+        m.weight = w
+        local out = m:updateOutput(batch)
+        local var = torch.var(out)
         local t_i = 1
-				local w, _ = m:getParameters()
         while(torch.abs(var - 1.0) >= tol_var and t_i < t_max) do
             w = w / var
-            m:reset(w)
-            var = torch.var(module.forward(batch), 1)
+            m.weight = w
+            var = torch.var(m:updateOutput(batch))
             t_i = t_i + 1
         end
     end
+    return model
 end
 
 return lsuv_init

@@ -51,7 +51,7 @@ function mnist.loadDataset(fileName, maxLoad)
       local std = std_ or data:view(data:size(1), -1):std(1, true)
       for i=1,data:size(1) do
          data[i]:add(-mean[1][i])
-         f std[1][i] > 0 then
+         if std[1][i] > 0 then
             tensor:select(2, i):mul(1/std[1][i])
          end
       end

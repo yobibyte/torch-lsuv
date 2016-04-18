@@ -69,8 +69,14 @@ print(model)
 model:add(nn.LogSoftMax())
 criterion = nn.ClassNLLCriterion()
 
+--get first batch
 local batch = torch.Tensor(batchSize,1,geometry[1],geometry[2])
-model  = require('lsuv')(model, batch)
+local k = 1
+for i = 1,batchSize do
+   batch[k] = trainData[i][1]:clone()
+   k = k + 1
+end
+model  = require('lsuv')(model, batch, nil, nil)
 
 if full then
    nbTrainingPatches = 60000
