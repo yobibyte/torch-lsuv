@@ -10,12 +10,12 @@ local function lsuv_init(model, get_batch, tol_var, t_max)
          while true do
             local input = get_batch()
             model:forward(input)
-            local out = m.output
-            local var = torch.var(out)
+            local var = torch.var(m.output)
             if torch.abs(var - 1.0) < tol_var or t_i > t_max then
                break
             end
             m.weight:div(math.sqrt(var))
+            t_i = t_i + 1
          end
       end
    end
