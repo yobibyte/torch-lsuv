@@ -1,3 +1,5 @@
+-- LSUV initialisation from this paper http://arxiv.org/abs/1511.06422
+
 require 'nn'
 
 local function lsuv_init(model, get_batch, tol_var, t_max)
