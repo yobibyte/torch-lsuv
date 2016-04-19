@@ -82,7 +82,7 @@ criterion = nn.ClassNLLCriterion()
 
 local get_batch = function()
    local batch = torch.Tensor(batchSize,1,geometry[1],geometry[2])
-   
+
    for i = 1,batchSize do
       local k = torch.random(nbTrainingPatches)
       batch[i] = trainData[k][1]:clone()
@@ -240,6 +240,3 @@ while true do
    train(trainData)
    test(testData)
 end
-
---TODO
---add kaixin ortho
