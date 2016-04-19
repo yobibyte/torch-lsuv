@@ -9,16 +9,24 @@ require 'image'
 require 'dataset-mnist'
 require 'pl'
 require 'paths'
-require 'nninit'
+nninit = require 'nninit'
 
-full  = false
-learningRate = 0.05
-batchSize = 10
+full  = true
+learningRate = 0.1
+batchSize = 100
 momentum = 0
 coefL1 = 0
 coefL2 = 0
 threads = 4
 
+if full then
+   nbTrainingPatches = 10000
+   nbTestingPatches = 1000
+else
+   nbTrainingPatches = 2000
+   nbTestingPatches = 1000
+   print('<warning> only using 2000 samples to train quickly (use flag -full to use 60000 samples)')
+end
 
 -- create training set and normalize
 trainData = mnist.loadTrainSet(nbTrainingPatches, geometry)
@@ -71,22 +79,17 @@ model:add(nn.LogSoftMax())
 criterion = nn.ClassNLLCriterion()
 
 --get first batch
-local batch = torch.Tensor(batchSize,1,geometry[1],geometry[2])
-local k = 1
-for i = 1,batchSize do
-   batch[k] = trainData[i][1]:clone()
-   k = k + 1
-end
-model  = require('lsuv')(model, batch, nil, nil)
 
-if full then
-   nbTrainingPatches = 60000
-   nbTestingPatches = 10000
-else
-   nbTrainingPatches = 2000
-   nbTestingPatches = 1000
-   print('<warning> only using 2000 samples to train quickly (use flag -full to use 60000 samples)')
+local get_batch = function()
+   local batch = torch.Tensor(batchSize,1,geometry[1],geometry[2])
+   
+   for i = 1,batchSize do
+      local k = torch.random(nbTrainingPatches)
+      batch[i] = trainData[k][1]:clone()
+   end
+   return batch
 end
+model  = require('lsuv')(model, get_batch)
 
 ----------------------------------------------------------------------
 -- this matrix records the current confusion across classes
