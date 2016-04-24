@@ -11,6 +11,7 @@ require 'image'
 require 'dataset-mnist'
 require 'pl'
 require 'paths'
+require 'lsuv'
 nninit = require 'nninit'
 
 ----------------------------------------------------------------------
@@ -24,13 +25,13 @@ local opt = lapp[[
    -p,--plot                                plot while training
    -o,--optimization  (default "SGD")       optimization: SGD | LBFGS
    -r,--learningRate  (default 0.05)        learning rate, for SGD only
-   -b,--batchSize     (default 10)          batch size
+   -b,--batchSize     (default 100)          batch size
    -m,--momentum      (default 0)           momentum, for SGD only
    -i,--maxIter       (default 3)           maximum nb of iterations per batch, for LBFGS
    --coefL1           (default 0)           L1 penalty on the weights
    --coefL2           (default 0)           L2 penalty on the weights
    -t,--threads       (default 4)           number of threads
-   -l,--lsuv      (default true)        use lsuv init
+   -l,--lsuv                                use lsuv init
 ]]
 
 -- fix seed
@@ -154,7 +155,7 @@ local get_batch = function()
    return batch
 end
 if opt.lsuv then
-  model  = require('lsuv')(model, get_batch)
+  model:lsuvInit(get_batch)
 end
 -- define training and testing functions
 --
