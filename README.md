@@ -59,6 +59,7 @@ Training without LSUV with learning rates 0.05 and 0.01 did not converge after 1
 
 ## References
 * http://arxiv.org/abs/1511.06422 *LSUV paper*
+* [Repo](https://github.com/ducha-aiki/LSUVinit) with the original implementation
 * http://arxiv.org/abs/1312.6120 *ortonormal init which is used here too*
 * https://github.com/Lasagne/Lasagne/blob/master/lasagne/init.py *python code of orthogonal init*
 
