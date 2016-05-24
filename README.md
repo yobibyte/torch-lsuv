@@ -2,8 +2,6 @@
 
 This is an attempt to reproduce the experiments from [arXiv:1511.06422](http://arxiv.org/abs/1511.06422).
 
-## Work in progress.
-
 ## How to use
 
 ### MNIST
@@ -12,7 +10,7 @@ This is an attempt to reproduce the experiments from [arXiv:1511.06422](http://a
 th mnist-example.lua --lsuv
 ```
 
-### CIFAR-10 (In progress).
+### CIFAR-10
 code taken from [here](https://github.com/szagoruyko/cifar.torch), thanks to [@szagoruyko](https://github.com/szagoruyko))
 
 Download and preprocess data first:
@@ -35,7 +33,8 @@ CUDA_VISIBLE_DEVICES=0 th train.lua --model vgg_bn_drop -s logs/vgg --lsuv
 
 ## Results
 
-### test accuracy for MNIST
+### test accuracy for MNIST (WARNING! nolsuv case is without BN)
+I used this only to check that training works.
 (with -f key for training on full dataset)
 
 epoch |with lsuv (lr=0.1)| with lsuv (lr=0.05) | without lsuv (lr=0.001) | with lsuv (lr=0.001)
@@ -51,11 +50,12 @@ epoch |with lsuv (lr=0.1)| with lsuv (lr=0.05) | without lsuv (lr=0.001) | with 
 9| 99.01%|98.9%|95.03%|95.87%
 10|98.96%|98.91|95.29%|96.15%
 
-Training without LSUV with learning rates 0.05 and 0.01 did not converge after 10 epochs (the accuracy was the same 11.35% along 10 epochs).
+Training without LSUV with learning rates 0.05 and 0.01 did not converge after 10 epochs (the accuracy was the same 11.35% along 10 epochs). This is because I used nolsuv case without BN.
 
+### Test accuracy for CIFAR-10
 
-## TODO
-* Results on CIFAR
+<img class='center' src="https://github.com/yobibyte/torch-lsuv/blob/master/pic/cifar_test_cost.png"/>
+
 
 ## References
 * http://arxiv.org/abs/1511.06422 *LSUV paper*
