@@ -1,6 +1,6 @@
 # torch-lsuv
 
-This is an attempt to reproduce the experiments from [arXiv:1511.06422](http://arxiv.org/abs/1511.06422). Blog post with some details [here](https://github.com/yobibyte/yobiblog/blob/master/posts/all-you-need-is-a-good-init.md)
+This is an attempt to reproduce the experiments from [arXiv:1511.06422](http://arxiv.org/abs/1511.06422). Blog post with some details [here](https://github.com/yobibyte/yobiblog/blob/master/posts/all-you-need-is-a-good-init.md).
 
 ## How to use
 
