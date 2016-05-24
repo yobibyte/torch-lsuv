@@ -5,7 +5,6 @@ require 'nn'
 nn.Sequential.lsuvInit = function (self, get_batch, tol_var, t_max)
    local tol_var = tol_var or 0.1
    local t_max   = t_max or 10
-
    for _,m in ipairs(self:listModules()) do
       if m.weight ~= nil then
          local t_i = 1
